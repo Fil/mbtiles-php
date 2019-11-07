@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+  <title>Example map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <script src='//api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js'></script>
+  <link href='//api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.css' rel='stylesheet' />
+
+  <style type='text/css'>
+    body {
+      font-family: Helvetica, Arial, sans;
+    }
+    #map {
+      width: 800px;
+      height: 400px;
+    }
+    .map-tooltip {
+      min-width: inherit;
+    }
+    .map-tooltip h2 {
+      padding: 0px;
+      margin: 0px;
+    }
+  </style>
+</head>
+<body>
+<h1>Example map with layers</h1>
+<p>This is an example map showing how you can integrate a map in your web page using
+  <a href='https://www.mapbox.com/mapbox.js/'>Mapbox.js</a> and
+  <a href='https://github.com/infostreams/mbtiles-php'>mbtiles-php</a>.
+</p>
+<p>
+  There's also an example map that showcases how to embed <a href='index.html'>a regular map without layers</a>.
+</p>
+<p>
+  The map in this example was generated with <a href='https://www.mapbox.com/tilemill/'>TileMill</a>.
+</p>
+<div id='map'></div>
+<script type="text/javascript">
+  // initialize map
+  var map = L.map('map').setView([0,0], 3);
+
+  // define layers
+  L.control.layers({
+    'Modern map': L.mapbox.tileLayer('server/basemap.tilejson', {maxZoom: 5}).addTo(map),
+    'Mercator 1861': L.mapbox.tileLayer('server/1861_Mercator_World.tilejson', {maxZoom: 3})
+  }, {
+    'Regions': L.mapbox.tileLayer('server/regions.tilejson')
+  }).addTo(map);
+</script>
+</body>
+</html>
