@@ -579,7 +579,9 @@ class Router extends BaseClass {
 
 	public function __construct() {
 		$request = $this->get_request();
-
+		
+		$request = preg_replace("@^(\w+/)256/@", "$1", $request);
+		
 		$this->request_uri = $request;
 		$this->routes = array();
 	}
