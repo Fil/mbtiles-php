@@ -280,6 +280,7 @@ class MapTileController extends BaseClass {
 				imagefill($png, 0, 0, $trans_colour);
 				header('Content-type: image/png');
 				$this->cachingHeaders($etag);
+				header("HTTP/1.0 404 Not Found");
 				imagepng($png);
 
 			} else {
@@ -688,7 +689,16 @@ class Router extends BaseClass {
 				$this->error(404, "Controller " . $this->controller_name . " not found");
 			}
 		} else {
-			$this->error(404, "Page not found");
+				// did not find a tile - return an empty (transparent) tile
+				$png = imagecreatetruecolor(256, 256);
+				imagesavealpha($png, true);
+				$trans_colour = imagecolorallocatealpha($png, 0, 0, 0, 127);
+				imagefill($png, 0, 0, $trans_colour);
+				header('Content-type: image/png');
+				header("HTTP/1.0 404 Not Found");
+				imagepng($png);
+				exit;
+
 		}
 	}
 
