@@ -41,6 +41,11 @@ $r->map(":layer/:z/:x/:y.:ext",
 		array("layer"=>$_identifier, "x"=>$_number, "y"=>$_number, "z"=>$_number, 
 			  "ext"=>"(png|jpg|jpeg|json)"));
 
+$r->map(":layer/:s/:z/:x/:y.:ext",
+		array("controller"=>"maptile", "action"=>"serveTile"), 
+		array("layer"=>$_identifier, "x"=>$_number, "y"=>$_number, "z"=>$_number, 
+			  "ext"=>"(png|jpg|jpeg|json)"));
+
 $r->map(":layer/:z/:x/:y.:ext\?:argument=:callback",
 		array("controller"=>"maptile", "action"=>"serveTile"), 
 		array("layer"=>$_identifier, "x"=>$_number, "y"=>$_number, "z"=>$_number, 
@@ -231,7 +236,7 @@ class MapTileController extends BaseClass {
 	}
 
 	protected function etag($type) {
-		return sha1(sprintf("%s-%s-%s-%s-%s-%s", $this->tileset, $this->x, $this->y, $this->z, $type, filemtime($this->getMBTilesName())));
+		return sha1(sprintf("%s-%s-%s-%s-%s-%s", $this->tileset, $this->x, $this->y, $this->z, $type, @filemtime($this->getMBTilesName())));
 	}
 
 	protected function checkCache($etag) {
