@@ -266,8 +266,10 @@ class MapTileController extends BaseClass {
 		try {
 			$this->openDB();
 
-			$result = $this->db->query('select tile_data as t from tiles where zoom_level=' . $this->z . ' and tile_column=' . $this->x . ' and tile_row=' . $this->y);
+			$result = $this->db->query($a = 'select tile_data as t from tiles where zoom_level=' . $this->z . ' and tile_column=' . $this->x . ' and tile_row=' . $this->y);
 			$data = $result->fetchColumn();
+
+		#var_dump($a, $data, $this->db->errorInfo());exit;
 
 			if (!isset($data) || $data === FALSE) {
 
